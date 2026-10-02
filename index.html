@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#10072a">
+<title>Deesam Live Prototype</title>
+<style>
+:root{--bg:#070b20;--card:#111936;--card2:#171f43;--purple:#762cff;--pink:#ff2f83;--text:#f7f5ff;--muted:#aeb5d0;--gold:#ffd34d}
+*{box-sizing:border-box} body{margin:0;background:#02040d;color:var(--text);font-family:Arial,sans-serif}
+.phone{max-width:430px;min-height:100vh;margin:auto;background:radial-gradient(circle at 70% 0,#2b0d5c 0,#0b0e26 32%,#070b20 70%);position:relative;padding-bottom:78px}
+header{padding:22px 18px 10px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:22px;font-weight:800}.logo span{color:#ff4a9a}.icon{font-size:22px}
+.screen{display:none;padding:8px 18px}.screen.active{display:block}
+h1{font-size:27px;margin:12px 0 5px}h2{font-size:20px;margin:20px 0 12px}.muted{color:var(--muted)}
+.search{background:#121a37;border:1px solid #26315a;border-radius:14px;padding:13px;color:var(--muted);margin:12px 0}
+.row{display:flex;gap:12px;overflow:auto}.avatar{min-width:86px;text-align:center}.avatar img{width:68px;height:68px;border-radius:50%;object-fit:cover;border:2px solid #8a43ff}
+.card{background:linear-gradient(145deg,#151c3c,#0e1430);border:1px solid #27315a;border-radius:18px;padding:15px;margin:10px 0}
+.room{min-width:160px}.room .pic{height:100px;border-radius:13px;background:linear-gradient(135deg,#4a1a75,#ec2f7d);display:flex;align-items:end;padding:10px;font-weight:700}
+.badge{display:inline-block;background:#ff2f72;padding:5px 8px;border-radius:8px;font-size:11px;font-weight:700}
+button{border:0;border-radius:13px;padding:13px 16px;color:#fff;font-weight:700;background:linear-gradient(90deg,#6b25ff,#a33bff);cursor:pointer}
+button.secondary{background:#202a50}.full{width:100%}.danger{background:linear-gradient(90deg,#ff246f,#ff3d48)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.gift{padding:15px;text-align:center;background:#151d40;border-radius:15px;border:1px solid #2b3764}.gift .emoji{font-size:35px}.gift small{color:var(--gold)}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:430px;width:100%;height:70px;background:#0b1028ee;border-top:1px solid #27315a;display:flex;justify-content:space-around;align-items:center;z-index:10}
+.nav{color:#aeb5d0;text-align:center;font-size:11px}.nav.active{color:#fff}.nav .ni{font-size:21px;display:block;margin-bottom:3px}
+.centerplus{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#ff2f83,#7029ff);font-size:27px;margin-top:-23px;border:4px solid #0b1028}
+.hero{padding:18px;border-radius:20px;background:linear-gradient(135deg,#37126d,#791c67,#171b48);border:1px solid #6939a8}
+.stats{display:flex;gap:8px}.stat{flex:1;background:#111a37;padding:14px;border-radius:14px;text-align:center}.stat b{font-size:18px;display:block}.stat span{font-size:11px;color:var(--muted)}
+.livehead{background:linear-gradient(180deg,#24104e,#0b1028);border-radius:20px;padding:18px;text-align:center}.speaker{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:16px 0}.person{width:62px;font-size:11px;color:var(--muted)}.person img{width:55px;height:55px;border-radius:50%;border:2px solid #a24cff}.chat{height:210px;overflow:auto;background:#0c122c;border-radius:15px;padding:12px}.chat p{margin:8px 0}.toolbar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.toolbar button{padding:11px 4px;font-size:11px}
+input,select,textarea{width:100%;background:#0e1530;border:1px solid #2b3764;color:#fff;padding:13px;border-radius:12px;margin:6px 0 12px}label{font-size:12px;color:#aeb5d0}
+.modal{position:fixed;inset:0;background:#0009;display:none;align-items:end;z-index:20}.sheet{background:#0d1430;border-radius:24px 24px 0 0;width:100%;max-width:430px;margin:auto;padding:20px}.modal.show{display:flex}
+.notice{padding:12px;background:#142044;border-radius:12px;color:#c9d0e9;margin:10px 0}
+</style>
+</head>
+<body>
+<div class="phone">
+<header><div class="logo">Deesam <span>Live</span></div><div class="icon">🔔</div></header>
+
+<section id="home" class="screen active">
+<h1>Good evening 👋</h1><div class="search">🔍 Search rooms, people...</div>
+<h2>🔴 Live Now <span class="muted" style="float:right;font-size:12px">See all</span></h2>
+<div class="row">
+<div class="room"><div class="pic">🎙️ Sarah<br><small>1.2K listening</small></div><p>Relationship Talk</p></div>
+<div class="room"><div class="pic">🎵 Mike<br><small>843 listening</small></div><p>Music & Vibes</p></div>
+</div>
+<h2>🔥 Trending Rooms</h2>
+<div class="card" onclick="show('live')"><b>❤️ Relationship Talk</b><br><span class="muted">326 listeners · Live now</span></div>
+<div class="card" onclick="show('live')"><b>🎵 Music & Entertainment</b><br><span class="muted">218 listeners · Live now</span></div>
+<div class="card" onclick="show('live')"><b>💼 Business Talk</b><br><span class="muted">154 listeners · Live now</span></div>
+</section>
+
+<section id="discover" class="screen">
+<h1>Discover</h1><div class="search">🔍 Search rooms, people...</div>
+<div class="row"><button>All</button><button class="secondary">Trending</button><button class="secondary">Music</button><button class="secondary">Faith</button></div>
+<h2>Popular Rooms</h2>
+<div class="card" onclick="show('live')">🔥 Real Talk with Friends<br><span class="muted">1.2K listeners</span></div>
+<div class="card" onclick="show('live')">🎵 Morning Vibes<br><span class="muted">856 listeners</span></div>
+<div class="card" onclick="show('live')">🙏 Faith & Prayer<br><span class="muted">642 listeners</span></div>
+</section>
+
+<section id="create" class="screen">
+<h1>Create Audio Room</h1>
+<label>Room title</label><input placeholder="e.g. Morning Vibes">
+<label>Category</label><select><option>Entertainment</option><option>Music</option><option>Relationships</option><option>Business</option><option>Faith</option></select>
+<label>Description</label><textarea rows="3" placeholder="Tell people what your room is about"></textarea>
+<label>Room privacy</label>
+<div class="card">◉ Public<br><br>○ Followers only<br><br>○ Private</div>
+<label>Advanced settings</label>
+<div class="card">☑ Allow speaker requests<br><br>☑ Allow gifts<br><br>☐ Slow chat</div>
+<button class="full" onclick="startRoom()">🎙️ START LIVE</button>
+</section>
+
+<section id="live" class="screen">
+<div class="livehead"><span class="badge">🔴 LIVE</span><h1 style="margin-bottom:0">Relationship Talk</h1><div class="muted">3.4K listeners</div>
+<div class="speaker">
+<div class="person"><img src="https://i.pravatar.cc/100?img=47"><br>Sarah<br>Host</div>
+<div class="person"><img src="https://i.pravatar.cc/100?img=12"><br>Mary<br>Listener</div>
+<div class="person"><img src="https://i.pravatar.cc/100?img=32"><br>John<br>Speaker</div>
+<div class="person"><img src="https://i.pravatar.cc/100?img=5"><br>Jane<br>Speaker</div>
+</div></div>
+<h2>💬 Chat</h2>
+<div class="chat"><p><b>Mary:</b> Hello everyone ❤️</p><p><b>John:</b> Great topic!</p><p><b>Kevin:</b> Greetings from Kenya 🇰🇪</p><p><b>Jane:</b> I love this conversation.</p></div>
+<div class="toolbar"><button onclick="openGifts()">💬 Chat</button><button onclick="openGifts()">🎁 Gift</button><button>🙋 Hand</button><button>❤️ Follow</button></div>
+<button class="full danger" style="margin-top:10px" onclick="show('home')">Leave Room</button>
+</section>
+
+<section id="wallet" class="screen">
+<h1>My Wallet</h1>
+<div class="stats"><div class="stat"><b>100,000</b><span>💎 Diamonds</span></div><div class="stat"><b>$10.00</b><span>💵 Earnings</span></div></div>
+<div class="notice"><b>Host conversion</b><br>10,000 diamonds = $1</div>
+<button class="full" onclick="openGifts()">💎 Buy Diamonds</button>
+<button class="full secondary" style="margin-top:10px" onclick="alert('Withdrawal prototype: minimum 10,000 diamonds ($1). M-Pesa and USDT can be connected in the production app.')">Withdraw</button>
+<h2>Recent Transactions</h2>
+<div class="card">🎁 Gift received <span style="float:right">+5,000 💎</span></div>
+<div class="card">🎁 Gift received <span style="float:right">+10,000 💎</span></div>
+<div class="card">💳 Diamond purchase <span style="float:right">-10,000 💎</span></div>
+</section>
+
+<section id="profile" class="screen">
+<div class="hero" style="text-align:center"><img src="https://i.pravatar.cc/120?img=47" style="width:90px;height:90px;border-radius:50%;border:3px solid #b04cff"><h1>Queen254 👑</h1><div class="muted">@queen254</div><div class="stats" style="margin-top:15px"><div class="stat"><b>2.4K</b><span>Followers</span></div><div class="stat"><b>128</b><span>Following</span></div></div></div>
+<div class="card">💎 Wallet <span style="float:right">›</span></div><div class="card">🎁 My Gifts <span style="float:right">›</span></div><div class="card">🎙️ My Rooms <span style="float:right">›</span></div><div class="card">⚙️ Settings <span style="float:right">›</span></div>
+</section>
+
+<div class="bottom">
+<div class="nav active" onclick="show('home',this)"><span class="ni">🏠</span>Home</div>
+<div class="nav" onclick="show('discover',this)"><span class="ni">🔎</span>Discover</div>
+<div class="nav" onclick="show('create',this)"><span class="centerplus">+</span></div>
+<div class="nav" onclick="alert('Notifications prototype')"><span class="ni">🔔</span>Alerts</div>
+<div class="nav" onclick="show('profile',this)"><span class="ni">👤</span>Profile</div>
+</div>
+</div>
+
+<div id="giftModal" class="modal" onclick="if(event.target===this)closeGifts()">
+<div class="sheet"><h2>🎁 Send a Gift</h2><div class="grid">
+<div class="gift" onclick="gift(100)">❤️<div>Heart</div><small>100 💎</small></div>
+<div class="gift" onclick="gift(500)">🌹<div>Rose</div><small>500 💎</small></div>
+<div class="gift" onclick="gift(1000)">🎤<div>Mic</div><small>1,000 💎</small></div>
+<div class="gift" onclick="gift(5000)">👑<div>Crown</div><small>5,000 💎</small></div>
+<div class="gift" onclick="gift(10000)">🚗<div>Car</div><small>10,000 💎</small></div>
+<div class="gift" onclick="gift(50000)">💎<div>Diamond</div><small>50,000 💎</small></div>
+<div class="gift" onclick="gift(100000)">👑💎<div>Royal Crown</div><small>100,000 💎</small></div>
+</div><button class="full secondary" style="margin-top:15px" onclick="closeGifts()">Close</button></div></div>
+
+<script>
+function show(id,el){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));
+ if(el) el.classList.add('active');
+ window.scrollTo(0,0);
+}
+function openGifts(){document.getElementById('giftModal').classList.add('show')}
+function closeGifts(){document.getElementById('giftModal').classList.remove('show')}
+function gift(v){alert('Prototype: gift sent for '+v.toLocaleString()+' diamonds. Host value = $'+(v/10000).toFixed(2));closeGifts()}
+function startRoom(){alert('Prototype: your audio room would now be created. In the production app this button connects to the live audio service.');show('live')}
+</script>
+</body>
+</html>
